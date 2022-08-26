@@ -1,8 +1,12 @@
-import openmdao.api as om
-import csdl
-import csdl_om
+# run file for TC1 open-loop stability
+
 import numpy as np
+import csdl
 import matplotlib.pyplot as plt
+from modopt.scipy_library import SLSQP
+from modopt.csdl_library import CSDLProblem
+import python_csdl_backend
+import csdl_om
 
 from eig_long import Eig_Long
 from eig_lat import Eig_Lat
@@ -38,36 +42,30 @@ A_lat = np.array([[-0.2543,0.183,0,-1],
                   [-15.982,0,-8.402,2.193],
                   [4.495,0,-0.3498,-0.7605]])
 
+
+#sim = python_csdl_backend.Simulator(dynamic_stability(size=size, A_long=A_long, A_lat=A_lat))
 sim = csdl_om.Simulator(dynamic_stability(size=size, A_long=A_long, A_lat=A_lat))
-sim.prob.run_model()
+sim.run()
 
 print('----LONGITUDINAL----')
-print('eigenvalues real (long):', sim.prob['e_real_long'])
-print('eigenvalues imag (long):', sim.prob['e_imag_long'])
-#print('sp_e_real   :', sim.prob['sp_e_real'])
-#print('sp_e_imag   :', sim.prob['sp_e_imag'])
-#print('ph_e_real   :', sim.prob['ph_e_real'])
-#print('ph_e_imag   :', sim.prob['ph_e_imag'])
-print('sp_wn   :', sim.prob['sp_wn'])
-print('ph_wn   :', sim.prob['ph_wn'])
-print('sp_z   :', sim.prob['sp_z'])
-print('ph_z   :', sim.prob['ph_z'])
-print('sp_t2   :', sim.prob['sp_t2'])
-print('ph_t2   :', sim.prob['ph_t2'])
+print('eigenvalues real (long):', sim['e_real_long'])
+print('eigenvalues imag (long):', sim['e_imag_long'])
+print('sp_wn   :', sim['sp_wn'])
+print('ph_wn   :', sim['ph_wn'])
+print('sp_z   :', sim['sp_z'])
+print('ph_z   :', sim['ph_z'])
+print('sp_t2   :', sim['sp_t2'])
+print('ph_t2   :', sim['ph_t2'])
 
 print('----LATERAL----')
-print('eigenvalues real (lat):', sim.prob['e_real_lat'])
-print('eigenvalues imag (lat):', sim.prob['e_imag_lat'])
-print('dr_wn   :', sim.prob['dr_wn'])
-print('rr_wn   :', sim.prob['rr_wn'])
-print('ss_wn   :', sim.prob['ss_wn'])
-print('dr_z   :', sim.prob['dr_z'])
-print('rr_z   :', sim.prob['rr_z'])
-print('ss_z   :', sim.prob['ss_z'])
-print('dr_t2   :', sim.prob['dr_t2'])
-print('rr_t2   :', sim.prob['rr_t2'])
-print('ss_t2   :', sim.prob['ss_t2'])
-
-
-
-
+print('eigenvalues real (lat):', sim['e_real_lat'])
+print('eigenvalues imag (lat):', sim['e_imag_lat'])
+print('dr_wn   :', sim['dr_wn'])
+print('rr_wn   :', sim['rr_wn'])
+print('ss_wn   :', sim['ss_wn'])
+print('dr_z   :', sim['dr_z'])
+print('rr_z   :', sim['rr_z'])
+print('ss_z   :', sim['ss_z'])
+print('dr_t2   :', sim['dr_t2'])
+print('rr_t2   :', sim['rr_t2'])
+print('ss_t2   :', sim['ss_t2'])
