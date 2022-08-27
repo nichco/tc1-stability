@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='tc1-stablity',
@@ -7,7 +7,7 @@ setup(
         'tc1-stability',
     ],
     install_requires=[
-        'openmdao',
+        'numpy',
         'csdl',
         'csdl_om',
         ],
