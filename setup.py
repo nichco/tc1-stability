@@ -9,6 +9,8 @@ setup(
     install_requires=[
         'numpy',
         'csdl',
-        'csdl_om',
+        'csdl_om'
+        'matplotlib'
+        'modopt',
         ],
 )
