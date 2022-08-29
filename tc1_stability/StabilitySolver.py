@@ -16,27 +16,31 @@ from lat import Lat
 
 class dynamic_stability(csdl.Model):
     def initialize(self):
-        self.parameters.declare('size')
         self.parameters.declare('A_long')
         self.parameters.declare('A_lat')
     def define(self):
-        size = self.parameters['size']
         
         A_long = self.parameters['A_long']
         A_lat = self.parameters['A_lat']
         
-        self.add(Eig_Long(size=size, val=A_long))
-        self.add(Long(size=size))
+        self.add(Eig_Long(size=4, val=A_long))
+        self.add(Long(size=4))
         
-        self.add(Eig_Lat(size=size, val=A_lat))
-        self.add(Lat(size=size))
+        self.add(Eig_Lat(size=4, val=A_lat))
+        self.add(Lat(size=4))
 
-size = 4
+
 
 A_long = np.array([[-3.10006462e-02,  1.35968193e-01,  4.47422538e+00, -3.21682896e+01],
                    [-3.60470947e-01, -2.25573434e+00,  2.01474173e+02,  6.05858233e-01],
                    [ 2.92702949e-03, -1.11344744e-01, -3.65414366e+00,  1.81446238e-10],
                    [ 0.00000000e+00,  0.00000000e+00,  9.99999941e-01,  0.00000000e+00]])
+
+A_long_2 = np.array([[-9.91498896e-02, -2.71735986e-03, -1.56616139e+00, -2.83933297e-01],
+                     [-3.25355791e-01, -8.91674306e-03,  5.74969557e+01, -1.62657457e+02],
+                     [ 1.36965474e-05,  3.75369356e-07, -3.93070488e+00, -2.24950324e+01],
+                     [ 0.00000000e+00,  0.00000000e+00,  1.00000000e+00,  0.00000000e+00]])
+
 A_lat = np.array([[-0.2543,0.183,0,-1],
                   [0,0,1,0],
                   [-15.982,0,-8.402,2.193],
@@ -44,7 +48,7 @@ A_lat = np.array([[-0.2543,0.183,0,-1],
 
 
 #sim = python_csdl_backend.Simulator(dynamic_stability(size=size, A_long=A_long, A_lat=A_lat))
-sim = csdl_om.Simulator(dynamic_stability(size=size, A_long=A_long, A_lat=A_lat))
+sim = csdl_om.Simulator(dynamic_stability(A_long=A_long_2, A_lat=A_lat))
 sim.run()
 
 print('----LONGITUDINAL----')
