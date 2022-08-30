@@ -22,21 +22,16 @@ class TC1StabilityModel(Model):
         pass
     def define(self):
         size = 4
-        
         # A_long = self.parameters['A_long']
         # A_lat = self.parameters['A_lat']
-
-        A_long = self.declare_variable('A_long', shape=(size,size))
-        A_lat = self.declare_variable('A_lat', shape=(size,size))
         
-        self.add(Eig_Long(size=size, val=A_long))
+        # self.add(Eig_Long(size=size, val=A_long))
+        self.add(Eig_Long(size=size))
         self.add(Long(size=size))
         
-        self.add(Eig_Lat(size=size, val=A_lat))
+        # self.add(Eig_Lat(size=size, val=A_lat))
+        self.add(Eig_Lat(size=size))
         self.add(Lat(size=size))
-
-        #sp_e_real = self.declare_variable('sp_e_real', shape=(1,1))
-        #self.register_output('short_period_e_real', 1*sp_e_real)
 
 
 """

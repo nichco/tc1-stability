@@ -8,13 +8,13 @@ class Eig_Long(csdl.Model):
     def initialize(self):
         # size and value of A
         self.parameters.declare('size')
-        self.parameters.declare('val')
+        # self.parameters.declare('val')
 
     def define(self):
         # size and value of A
         size = self.parameters['size']
         shape = (size, size)
-        val = self.parameters['val']
+        # val = self.parameters['val']
 
         # Create A matrix
         # A_long = self.create_input('A_long', val=val, shape=shape)

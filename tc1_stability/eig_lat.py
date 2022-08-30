@@ -8,13 +8,13 @@ class Eig_Lat(csdl.Model):
     def initialize(self):
         # size and value of A
         self.parameters.declare('size')
-        self.parameters.declare('val')
+        # self.parameters.declare('val')
 
     def define(self):
         # size and value of A
         size = self.parameters['size']
         shape = (size, size)
-        val = self.parameters['val']
+        # val = self.parameters['val']
 
         # Create A matrix
         # A_lat = self.create_input('A_lat', val=val)
