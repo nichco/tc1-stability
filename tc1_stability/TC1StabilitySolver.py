@@ -1,5 +1,4 @@
 # run file for TC1 open-loop stability
-
 import numpy as np
 import csdl
 from csdl import Model
