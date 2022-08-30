@@ -2,32 +2,41 @@
 
 import numpy as np
 import csdl
+from csdl import Model
 import matplotlib.pyplot as plt
 from modopt.scipy_library import SLSQP
 from modopt.csdl_library import CSDLProblem
 import python_csdl_backend
 import csdl_om
 
-from eig_long import Eig_Long
-from eig_lat import Eig_Lat
-from long import Long
-from lat import Lat
+from tc1_stability.eig_long import Eig_Long
+from tc1_stability.eig_lat import Eig_Lat
+from tc1_stability.long import Long
+from tc1_stability.lat import Lat
 
 
-class dynamic_stability(csdl.Model):
+class TC1StabilityModel(Model):
     def initialize(self):
         self.parameters.declare('A_long')
         self.parameters.declare('A_lat')
+        #pass
     def define(self):
+        size = 4
         
         A_long = self.parameters['A_long']
         A_lat = self.parameters['A_lat']
+
+        # A_long = self.declare_variable('A_long', shape=(size,size))
+        # A_lat = self.declare_variable('A_lat', shape=(size,size))
         
-        self.add(Eig_Long(size=4, val=A_long))
-        self.add(Long(size=4))
+        self.add(Eig_Long(size=size, val=A_long))
+        self.add(Long(size=size))
         
-        self.add(Eig_Lat(size=4, val=A_lat))
-        self.add(Lat(size=4))
+        self.add(Eig_Lat(size=size, val=A_lat))
+        self.add(Lat(size=size))
+
+        #sp_e_real = self.declare_variable('sp_e_real', shape=(1,1))
+        #self.register_output('short_period_e_real', 1*sp_e_real)
 
 
 
@@ -47,8 +56,10 @@ A_lat = np.array([[-0.2543,0.183,0,-1],
                   [4.495,0,-0.3498,-0.7605]])
 
 
-#sim = python_csdl_backend.Simulator(dynamic_stability(size=size, A_long=A_long, A_lat=A_lat))
-sim = csdl_om.Simulator(dynamic_stability(A_long=A_long_2, A_lat=A_lat))
+"""
+# sim = python_csdl_backend.Simulator(dynamic_stability(size=size, A_long=A_long, A_lat=A_lat))
+# sim = csdl_om.Simulator(TC1StabilityModel(A_long=A_long_2, A_lat=A_lat))
+sim = python_csdl_backend.Simulator(TC1StabilityModel(A_long=A_long_2, A_lat=A_lat))
 sim.run()
 
 print('----LONGITUDINAL----')
@@ -73,3 +84,4 @@ print('ss_z   :', sim['ss_z'])
 print('dr_t2   :', sim['dr_t2'])
 print('rr_t2   :', sim['rr_t2'])
 print('ss_t2   :', sim['ss_t2'])
+"""

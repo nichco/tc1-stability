@@ -18,6 +18,7 @@ class Eig_Lat(csdl.Model):
 
         # Create A matrix
         A_lat = self.create_input('A_lat', val=val)
+        # A_lat = self.declare_variable('A_lat', shape=(size,size))
 
         # custom operation insertion
         e_r, e_i = csdl.custom(A_lat, op=EigExplicit(size=size))
@@ -42,8 +43,8 @@ class EigExplicit(csdl.CustomExplicitOperation):
         self.add_input('A_lat', shape=shape)
 
         # Output: Eigenvalues
-        self.add_output('e_real_lat', shape=size)
-        self.add_output('e_imag_lat', shape=size)
+        self.add_output('e_real_lat', shape=(1,size))
+        self.add_output('e_imag_lat', shape=(1,size))
 
         self.declare_derivatives('e_real_lat', 'A_lat')
         self.declare_derivatives('e_imag_lat', 'A_lat')
@@ -77,8 +78,8 @@ class EigExplicit(csdl.CustomExplicitOperation):
         e_imag_ss = np.imag(ss_eig)
         
         # order: dr, dr, rr, ss
-        e_real = [e_real_dr, e_real_dr, e_real_rr, e_real_ss]
-        e_imag = [e_imag_dr, e_imag_dr, e_imag_rr, e_imag_ss]
+        e_real = np.array([[e_real_dr, e_real_dr, e_real_rr, e_real_ss]])
+        e_imag = np.array([[e_imag_dr, e_imag_dr, e_imag_rr, e_imag_ss]])
         
         outputs['e_real_lat'] = 1*e_real
         outputs['e_imag_lat'] = 1*e_imag

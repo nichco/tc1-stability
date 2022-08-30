@@ -16,7 +16,7 @@ class Long(csdl.Model):
         sp_e_imag = e_imag[0,2]
         self.register_output('sp_e_real', sp_e_real)
         self.register_output('sp_e_imag', sp_e_imag)
-
+        
         # get phugoid eigenvalue pair
         ph_e_real = e_real[0,0]
         ph_e_imag = e_imag[0,0]

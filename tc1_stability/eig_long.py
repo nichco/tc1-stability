@@ -17,7 +17,8 @@ class Eig_Long(csdl.Model):
         val = self.parameters['val']
 
         # Create A matrix
-        A_long = self.create_input('A_long', val=val)
+        A_long = self.create_input('A_long', val=val, shape=shape)
+        # A_long = self.declare_variable('A_long', shape=(size,size))
 
         # custom operation insertion
         e_r, e_i = csdl.custom(A_long, op=EigExplicit(size=size))
@@ -42,8 +43,8 @@ class EigExplicit(csdl.CustomExplicitOperation):
         self.add_input('A_long', shape=shape)
 
         # Output: Eigenvalues
-        self.add_output('e_real_long', shape=size)
-        self.add_output('e_imag_long', shape=size)
+        self.add_output('e_real_long', shape=(1,size))
+        self.add_output('e_imag_long', shape=(1,size))
 
         self.declare_derivatives('e_real_long', 'A_long')
         self.declare_derivatives('e_imag_long', 'A_long')
@@ -69,8 +70,8 @@ class EigExplicit(csdl.CustomExplicitOperation):
         e_imag_ph = np.imag(ph_eig)
         
         # phugoid eigenvalues are first, followed by short period eigenvalues
-        e_real = [e_real_ph, e_real_ph, e_real_sp, e_real_sp]
-        e_imag = [e_imag_ph, e_imag_ph, e_imag_sp, e_imag_sp]
+        e_real = np.array([[e_real_ph, e_real_ph, e_real_sp, e_real_sp]])
+        e_imag = np.array([[e_imag_ph, e_imag_ph, e_imag_sp, e_imag_sp]])
         
         outputs['e_real_long'] = 1*e_real
         outputs['e_imag_long'] = 1*e_imag
