@@ -17,17 +17,17 @@ from tc1_stability.lat import Lat
 
 class TC1StabilityModel(Model):
     def initialize(self):
-        self.parameters.declare('A_long')
-        self.parameters.declare('A_lat')
-        #pass
+        # self.parameters.declare('A_long')
+        # self.parameters.declare('A_lat')
+        pass
     def define(self):
         size = 4
         
-        A_long = self.parameters['A_long']
-        A_lat = self.parameters['A_lat']
+        # A_long = self.parameters['A_long']
+        # A_lat = self.parameters['A_lat']
 
-        # A_long = self.declare_variable('A_long', shape=(size,size))
-        # A_lat = self.declare_variable('A_lat', shape=(size,size))
+        A_long = self.declare_variable('A_long', shape=(size,size))
+        A_lat = self.declare_variable('A_lat', shape=(size,size))
         
         self.add(Eig_Long(size=size, val=A_long))
         self.add(Long(size=size))
@@ -39,7 +39,7 @@ class TC1StabilityModel(Model):
         #self.register_output('short_period_e_real', 1*sp_e_real)
 
 
-
+"""
 A_long = np.array([[-3.10006462e-02,  1.35968193e-01,  4.47422538e+00, -3.21682896e+01],
                    [-3.60470947e-01, -2.25573434e+00,  2.01474173e+02,  6.05858233e-01],
                    [ 2.92702949e-03, -1.11344744e-01, -3.65414366e+00,  1.81446238e-10],
@@ -56,10 +56,11 @@ A_lat = np.array([[-0.2543,0.183,0,-1],
                   [4.495,0,-0.3498,-0.7605]])
 
 
-"""
+
 # sim = python_csdl_backend.Simulator(dynamic_stability(size=size, A_long=A_long, A_lat=A_lat))
 # sim = csdl_om.Simulator(TC1StabilityModel(A_long=A_long_2, A_lat=A_lat))
-sim = python_csdl_backend.Simulator(TC1StabilityModel(A_long=A_long_2, A_lat=A_lat))
+# sim = python_csdl_backend.Simulator(TC1StabilityModel(A_long=A_long_2, A_lat=A_lat))
+sim = python_csdl_backend.Simulator(TC1StabilityModel())
 sim.run()
 
 print('----LONGITUDINAL----')

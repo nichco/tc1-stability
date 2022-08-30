@@ -17,8 +17,8 @@ class Eig_Long(csdl.Model):
         val = self.parameters['val']
 
         # Create A matrix
-        A_long = self.create_input('A_long', val=val, shape=shape)
-        # A_long = self.declare_variable('A_long', shape=(size,size))
+        # A_long = self.create_input('A_long', val=val, shape=shape)
+        A_long = self.declare_variable('A_long', shape=(size,size))
 
         # custom operation insertion
         e_r, e_i = csdl.custom(A_long, op=EigExplicit(size=size))

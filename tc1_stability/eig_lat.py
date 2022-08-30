@@ -17,8 +17,8 @@ class Eig_Lat(csdl.Model):
         val = self.parameters['val']
 
         # Create A matrix
-        A_lat = self.create_input('A_lat', val=val)
-        # A_lat = self.declare_variable('A_lat', shape=(size,size))
+        # A_lat = self.create_input('A_lat', val=val)
+        A_lat = self.declare_variable('A_lat', shape=(size,size))
 
         # custom operation insertion
         e_r, e_i = csdl.custom(A_lat, op=EigExplicit(size=size))
