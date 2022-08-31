@@ -23,6 +23,47 @@ class TC1StabilityModel(Model):
         size = 4
         # A_long = self.parameters['A_long']
         # A_lat = self.parameters['A_lat']
+
+        A_matrix = self.declare_variable('A_matrix',shape=(12,12))
+
+        # given states [u v w p q r phi theta psi x y z]
+        # extract longitudinal fd states [u w q theta]
+        A_long = self.create_output(name='A_long', shape=(4, 4))
+        A_long[0,0] = A_matrix[0,0] # du/du
+        A_long[0,1] = A_matrix[0,2] # du/dw
+        A_long[0,2] = A_matrix[0,4] # du/dq
+        A_long[0,3] = A_matrix[0,7] # du/dtheta
+        A_long[1,0] = A_matrix[2,0] # dw/du
+        A_long[1,1] = A_matrix[2,2] # dw/dw
+        A_long[1,2] = A_matrix[2,4] # dw/dq
+        A_long[1,3] = A_matrix[2,7] # dw/dtheta
+        A_long[2,0] = A_matrix[4,0] # dq/du
+        A_long[2,1] = A_matrix[4,2] # dq/dw
+        A_long[2,2] = A_matrix[4,4] # dq/dq
+        A_long[2,3] = A_matrix[4,7] # dq/dtheta
+        A_long[3,0] = A_matrix[7,0] # dtheta/du
+        A_long[3,1] = A_matrix[7,2] # dtheta/dw
+        A_long[3,2] = A_matrix[7,4] # dtheta/dq
+        A_long[3,3] = A_matrix[7,7] # dtheta/dtheta
+        # given states [u v w p q r phi theta psi x y z]
+        # extract lateral fd states [v p r phi]
+        A_lat = self.create_output(name='A_lat', shape=(4, 4))
+        A_lat[0,0] = A_matrix[1,1] # dv/dv
+        A_lat[0,1] = A_matrix[1,3] # dv/dp
+        A_lat[0,2] = A_matrix[1,5] # dv/dr
+        A_lat[0,3] = A_matrix[1,6] # dv/dphi
+        A_lat[1,0] = A_matrix[3,1] # dp/dv
+        A_lat[1,1] = A_matrix[3,3] # dp/dp
+        A_lat[1,2] = A_matrix[3,5] # dp/dr
+        A_lat[1,3] = A_matrix[3,6] # dp/dphi
+        A_lat[2,0] = A_matrix[5,1] # dr/dv
+        A_lat[2,1] = A_matrix[5,3] # dr/dp
+        A_lat[2,2] = A_matrix[5,5] # dr/dr
+        A_lat[2,3] = A_matrix[5,6] # dr/dphi
+        A_lat[3,0] = A_matrix[6,1] # dphi/dv
+        A_lat[3,1] = A_matrix[6,3] # dphi/dp
+        A_lat[3,2] = A_matrix[6,5] # dphi/dr
+        A_lat[3,3] = A_matrix[6,6] # dphi/dphi
         
         # self.add(Eig_Long(size=size, val=A_long))
         self.add(Eig_Long(size=size))
