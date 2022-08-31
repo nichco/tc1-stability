@@ -6,11 +6,5 @@ setup(
     packages=[
         'tc1_stability',
     ],
-    install_requires=[
-        'numpy',
-        'csdl',
-        'csdl_om'
-        'matplotlib'
-        'modopt',
-        ],
+    install_requires=[],
 )
