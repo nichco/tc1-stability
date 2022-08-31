@@ -4,7 +4,7 @@ setup(
     name='tc1-stablity',
     version='0',
     packages=[
-        'tc1-stability',
+        'tc1_stability',
     ],
     install_requires=[
         'numpy',
