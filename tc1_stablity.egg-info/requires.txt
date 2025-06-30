@@ -1,3 +1,0 @@
-numpy
-csdl
-csdl_om
